@@ -29,6 +29,7 @@ func WithAccountService(accountService *service.AccountService) func(*AccountHan
 	}
 }
 
+// Transfer Provides money transfer between debit and credit accounts
 func (a *AccountHandler) Transfer() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		input := dto.TransferRequest{}
@@ -40,7 +41,6 @@ func (a *AccountHandler) Transfer() http.Handler {
 			err.(*global.Error).WriteError(w)
 			return
 		}
-
 		err = a.accountService.Transfer(input.DebitAccountId, input.CreditAccountId, input.Amount)
 		if err != nil {
 			log.Printf("err occurred while transfer : %s \n", err.Error())
@@ -48,11 +48,11 @@ func (a *AccountHandler) Transfer() http.Handler {
 
 			return
 		}
-
-		writeResponse(w, dto.TransferResponse{Success: true}, http.StatusCreated)
+		writeResponse(w, dto.TransferResponse{Success: true}, http.StatusOK)
 	})
 }
 
+// Accounts Returns all accounts
 func (a *AccountHandler) Accounts() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		res := dto.AccountsResponse{}
@@ -67,6 +67,7 @@ func (a *AccountHandler) Accounts() http.Handler {
 	})
 }
 
+// GetAccountById Returns a specific account by ID
 func (a *AccountHandler) GetAccountById() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		id := mux.Vars(r)["id"]

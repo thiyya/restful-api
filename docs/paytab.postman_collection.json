@@ -1,0 +1,74 @@
+{
+	"info": {
+		"_postman_id": "61323a40-b64e-4011-a820-c7351ff738e1",
+		"name": "paytab",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23327091"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/transfer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"debitAccountId\":\"d3a0fb68-ca14-48c8-b529-b153b4a7d562\",\n\"creditAccountId\":\"74da2153-293a-4d9c-aa46-8beafbd3b213\",\n\"amount\":1111111\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/transfer",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/account/74da2153-293a-4d9c-aa46-8beafbd3b213",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/account/74da2153-293a-4d9c-aa46-8beafbd3b213",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"account",
+						"74da2153-293a-4d9c-aa46-8beafbd3b213"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/account",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/account",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"account"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

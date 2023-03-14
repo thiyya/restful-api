@@ -23,6 +23,7 @@ func NewError(code int, item, message string) *Error {
 func (x *Error) Error() string {
 	return x.message
 }
+
 func (x *Error) SetErrorMessage(message string) {
 	x.message = message
 }
