@@ -26,7 +26,7 @@ var _ AccountRepo = (*accountRepository)(nil)
 
 type accountRepository struct {
 	accountMap map[string]*model.Account
-	mutex      sync.RWMutex
+	sync.RWMutex
 }
 
 func NewAccountRepository(options ...func(*accountRepository)) *accountRepository {
@@ -44,22 +44,28 @@ func WithAccounts(accountMap map[string]*model.Account) func(*accountRepository)
 }
 
 func (a *accountRepository) Update(account *model.Account) {
-	a.mutex.Lock()
+	a.Lock()
+	defer a.Unlock()
+
 	a.accountMap[account.ID] = account
-	a.mutex.Unlock()
 }
 
 func (a *accountRepository) GetAllAccounts() map[string]*model.Account {
-	a.mutex.RLock()
-	accounts := a.accountMap
-	a.mutex.RUnlock()
-	return accounts
+	a.RLock()
+	defer a.RUnlock()
+
+	result := make(map[string]*model.Account, len(a.accountMap))
+	for k, v := range a.accountMap {
+		result[k] = v
+	}
+	return result
 }
 
 func (a *accountRepository) GetAccountById(accountId string) (*model.Account, error) {
-	a.mutex.RLock()
+	a.RLock()
+	defer a.RUnlock()
+
 	account, ok := a.accountMap[accountId]
-	a.mutex.RUnlock()
 	if ok {
 		return account, nil
 	}

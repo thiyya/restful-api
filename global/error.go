@@ -7,9 +7,9 @@ import (
 )
 
 type Error struct {
-	code    int    `json:"code"`
-	item    string `json:"items"`
-	message string `json:"message"`
+	code    int
+	item    string
+	message string
 }
 
 func NewError(code int, item, message string) *Error {
